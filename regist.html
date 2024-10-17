@@ -120,7 +120,7 @@
         });
 
         // Generate QR code
-        const qrData = `ID: ${registrationId}, Name: ${firstName} ${lastName}, Level: ${level}, Department: ${department}`;
+        const qrData = `ID: ${registrationId}, Name: ${firstName} ${lastName}, Level: ${level}, Department: ${department},You are welcome to Lam Conference 2024`;
         const qrCodeCanvas = document.getElementById('qr-code');
         QRCode.toCanvas(qrCodeCanvas, qrData, (error) => {
           if (error) console.error('QR Code Error:', error);
