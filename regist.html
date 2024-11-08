@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,130 +8,158 @@
     <link rel="icon" type="image" href="./asset/media/logo.JPG">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <!-- Include SMTP.js directly in the HTML -->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
     <script>
         tailwind.config = {
-          theme: {
-            extend: {
-              colors: {
-                clifford: '#da373d',
-              }
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
             }
-          }
-        }
-      </script>
+        };
+    </script>
 </head>
-<body>
-  <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Register For LAM Conference</h2>
-      <p class="mt-2 text-lg leading-8 text-gray-600">Fill in your details.</p>
+
+<body class="bg-gray-100">
+
+    <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8 shadow-lg max-w-2xl mx-auto mt-12">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Register For LAM Conference</h2>
+            <p class="mt-2 text-lg leading-8 text-gray-600">Fill in your details.</p>
+        </div>
+
+        <form id="registration-form" class="mt-16">
+            <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                <div>
+                    <label for="registration-id"
+                        class="block text-sm font-semibold leading-6 text-gray-900">Registration ID</label>
+                    <input type="text" id="registration-id"
+                        class="mt-2.5 block w-full rounded-md border border-gray-300 px-3.5 py-2 shadow-sm focus:ring-indigo-600 focus:border-indigo-600"
+                        required>
+                </div>
+                <div>
+                    <label for="first-name" class="block text-sm font-semibold leading-6 text-gray-900">First
+                        Name</label>
+                    <input type="text" id="first-name"
+                        class="mt-2.5 block w-full rounded-md border border-gray-300 px-3.5 py-2 shadow-sm focus:ring-indigo-600 focus:border-indigo-600"
+                        required>
+                </div>
+                <div>
+                    <label for="last-name" class="block text-sm font-semibold leading-6 text-gray-900">Last Name</label>
+                    <input type="text" id="last-name"
+                        class="mt-2.5 block w-full rounded-md border border-gray-300 px-3.5 py-2 shadow-sm focus:ring-indigo-600 focus:border-indigo-600"
+                        required>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="level" class="block text-sm font-semibold leading-6 text-gray-900">Level</label>
+                    <input type="number" id="level"
+                        class="mt-2.5 block w-full rounded-md border border-gray-300 px-3.5 py-2 shadow-sm focus:ring-indigo-600 focus:border-indigo-600"
+                        required>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="department"
+                        class="block text-sm font-semibold leading-6 text-gray-900">Department</label>
+                    <input type="text" id="department"
+                        class="mt-2.5 block w-full rounded-md border border-gray-300 px-3.5 py-2 shadow-sm focus:ring-indigo-600 focus:border-indigo-600"
+                        required>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="email" class="block text-sm font-semibold leading-6 text-gray-900">Email</label>
+                    <input type="email" id="email"
+                        class="mt-2.5 block w-full rounded-md border border-gray-300 px-3.5 py-2 shadow-sm focus:ring-indigo-600 focus:border-indigo-600"
+                        required>
+                </div>
+            </div>
+            <div class="mt-10">
+                <button type="button" id="submit-btn"
+                    class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Continue</button>
+            </div>
+        </form>
+        <canvas id="qr-code" class="mt-8 mx-auto"></canvas>
     </div>
-    <form id="registration-form" class="mx-auto mt-16 max-w-xl sm:mt-20">
-      <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-        <div>
-          <label for="registration-id" class="block text-sm font-semibold leading-6 text-gray-900">Registration ID</label>
-          <div class="mt-2.5">
-            <input type="text" id="registration-id" class="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-600 focus:border-indigo-600">
-          </div>
-        </div>
-        <div>
-          <label for="first-name" class="block text-sm font-semibold leading-6 text-gray-900">First name</label>
-          <div class="mt-2.5">
-            <input type="text" id="first-name" class="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-600 focus:border-indigo-600">
-          </div>
-        </div>
-        <div>
-          <label for="last-name" class="block text-sm font-semibold leading-6 text-gray-900">Last name</label>
-          <div class="mt-2.5">
-            <input type="text" id="last-name" class="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-600 focus:border-indigo-600" required>
-          </div>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="level" class="block text-sm font-semibold leading-6 text-gray-900">Level</label>
-          <div class="mt-2.5">
-            <input type="number" id="level" class="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-600 focus:border-indigo-600" required>
-          </div>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="department" class="block text-sm font-semibold leading-6 text-gray-900">Department</label>
-          <div class="mt-2.5">
-            <input type="text" id="department" class="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-600 focus:border-indigo-600" required>
-          </div>
-        </div>
-        <div class="sm:col-span-2">
-          <label for="email" class="block text-sm font-semibold leading-6 text-gray-900">Email</label>
-          <div class="mt-2.5">
-            <input type="email" id="email" class="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-600 focus:border-indigo-600" required>
-          </div>
-        </div>
-      </div>
-      <div class="mt-10">
-        <button type="button" id="submit-btn" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Continue</button>
-      </div>
-    </form>
-    <canvas id="qr-code" class="mt-8 mx-auto"></canvas>
-  </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, doc, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyBFa_KKnryQ5rlwjpL-DPec26gvAs0y6Ag",
-      authDomain: "lam-conf.firebaseapp.com",
-      projectId: "lam-conf",
-      storageBucket: "lam-conf.appspot.com",
-      messagingSenderId: "669203674602",
-      appId: "1:669203674602:web:ba3f1ef8909ad56c612e93",
-      measurementId: "G-GNF894R0ZE"
-    };
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "lam-conf.firebaseapp.com",
+            projectId: "lam-conf",
+            storageBucket: "lam-conf.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-    document.getElementById('submit-btn').addEventListener('click', async () => {
-      const registrationId = document.getElementById('registration-id').value;
-      const firstName = document.getElementById('first-name').value;
-      const lastName = document.getElementById('last-name').value;
-      const level = document.getElementById('level').value;
-      const department = document.getElementById('department').value;
-      const email = document.getElementById('email').value;
+        const sendRemark = async => {
+            console.log("Sent");
+        }
 
-      if (!registrationId) {
-        alert('Please enter the Registration ID');
-        return;
-      }
+        const sendEmailWithQRCode = async (email, base64QRCode) => {
+            sendRemark
+            await Email.send({
+                SecureToken: "e044f4a3-c17c-4933-b173-7d72b54d69d2 ",
+                To: email,
+                From: "megaolubakin@gmail.com",
+                Subject: "This is the subject",
+                Body: "And this is the body",
+                Attachments: [
+                    {
+                        name: "qr-code.png",
+                        data: base64QRCode
+                    }
+                ],
+            }).then(
+                message => alert("Email sent successfully!"),
+                
+            ).catch(
+                error => console.error("Error sending email:", error)
+            );
 
-      // Check if the ID exists in Firestore
-      const q = query(collection(db, "generated_ids"), where("id", "==", registrationId));
-      const querySnapshot = await getDocs(q);
+        };
 
-      if (!querySnapshot.empty) {
-        const docRef = querySnapshot.docs[0].ref;
-        
-        // Update Firestore document with new info
-        await updateDoc(docRef, {
-          firstName: firstName,
-          lastName: lastName,
-          level: level,
-          department: department,
-          email: email
+        document.getElementById('submit-btn').addEventListener('click', async () => {
+            const registrationId = document.getElementById('registration-id').value;
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const level = document.getElementById('level').value;
+            const department = document.getElementById('department').value;
+            const email = document.getElementById('email').value;
+
+            const q = query(collection(db, "generated_ids"), where("id", "==", registrationId));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                const docRef = querySnapshot.docs[0].ref;
+                await updateDoc(docRef, { firstName, lastName, level, department, email });
+
+                const qrData = `ID: ${registrationId}, Name: ${firstName} ${lastName}, Level: ${level}, Department: ${department}`;
+                const qrCodeCanvas = document.getElementById('qr-code');
+
+                QRCode.toCanvas(qrCodeCanvas, qrData, async (error) => {
+                    if (error) {
+                        console.error('QR Code Error:', error);
+                        return;
+                    }
+
+                    const base64QRCode = await qrCodeCanvas.toDataURL();
+                    sendEmailWithQRCode(email, base64QRCode);
+                });
+
+            } else {
+                alert('Invalid registration ID.');
+            }
         });
+    </script>
 
-        // Generate QR code
-        const qrData = `ID: ${registrationId}, Name: ${firstName} ${lastName}, Level: ${level}, Department: ${department},You are welcome to Lam Conference 2024`;
-        const qrCodeCanvas = document.getElementById('qr-code');
-        QRCode.toCanvas(qrCodeCanvas, qrData, (error) => {
-          if (error) console.error('QR Code Error:', error);
-          else alert('QR Code Generated!');
-        });
-
-      } else {
-        alert('There is an issue with your registration ID.');
-      }
-    });
-  </script>
 </body>
+
 </html>
